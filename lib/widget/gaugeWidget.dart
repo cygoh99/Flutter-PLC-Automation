@@ -6,73 +6,91 @@ import 'package:plc_app/widget/baseWidget.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-class GaugeWidgetBuilder extends BaseWidgetBuilder {
-  double _value;
-  double _min;
-  double _max;
-  double _minSafeValue;
-  double _maxSafeValue;
-  double _minWarningValue;
-  double _maxWarningValue;
-  double _minDangerValue;
-  double _maxDangerValue;
+import '../demo.dart';
+import '../widgetClass.dart';
 
-  GaugeWidgetBuilder(
-    String title,
-    this._value,
-    this._min,
-    this._max,
-    this._minSafeValue,
-    this._maxSafeValue,
-    this._minWarningValue,
-    this._maxWarningValue,
-    this._minDangerValue,
-    this._maxDangerValue,
-  ) : super(title: title);
+class GaugeWidgetBuilder extends BaseWidgetBuilder {
+  late double _value;
+  late double _min;
+  late double _max;
+  late double _minSafeValue;
+  late double _maxSafeValue;
+  late double _minWarningValue;
+  late double _maxWarningValue;
+  late double _minDangerValue;
+  late double _maxDangerValue;
+
+  GaugeWidgetBuilder({
+    required String title,
+    required double value,
+    required double min,
+    required double max,
+    required double minSafeValue,
+    required double maxSafeValue,
+    required double minWarningValue,
+    required double maxWarningValue,
+    required double minDangerValue,
+    required double maxDangerValue,
+  }) : super(title: title) {
+    _value = value;
+    _min = min;
+    _max = max;
+    _minSafeValue = minSafeValue;
+    _maxSafeValue = maxSafeValue;
+    _minWarningValue = minWarningValue;
+    _maxWarningValue = maxWarningValue;
+    _minDangerValue = minDangerValue;
+    _maxDangerValue = maxDangerValue;
+  }
 
   @override
   State<GaugeWidgetBuilder> createState() => _GaugeWidgetBuilderState();
 
   Widget buildContent() {
-    return SizedBox(
-      height: 300,
-      child: SfRadialGauge(
-        title: GaugeTitle(
-          text: title,
-          textStyle:
-              const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Card(
+        child: SizedBox(
+          height: 300,
+          child: SfRadialGauge(
+            title: GaugeTitle(
+              text: title,
+              textStyle:
+                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            axes: <RadialAxis>[
+              RadialAxis(minimum: _min, maximum: _max, ranges: <GaugeRange>[
+                GaugeRange(
+                  startValue: _minSafeValue,
+                  endValue: _maxSafeValue,
+                  color: Colors.green,
+                ),
+                GaugeRange(
+                  startValue: _minWarningValue,
+                  endValue: _maxWarningValue,
+                  color: Colors.orange,
+                ),
+                GaugeRange(
+                  startValue: _minDangerValue,
+                  endValue: _maxDangerValue,
+                  color: Colors.red,
+                ),
+              ], pointers: <GaugePointer>[
+                NeedlePointer(
+                  value: _value,
+                ),
+              ], annotations: <GaugeAnnotation>[
+                GaugeAnnotation(
+                    widget: Container(
+                        child: Text('$_value',
+                            style: const TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold))),
+                    angle: _value,
+                    positionFactor: 0.5)
+              ]),
+            ],
+          ),
         ),
-        axes: <RadialAxis>[
-          RadialAxis(minimum: _min, maximum: _max, ranges: <GaugeRange>[
-            GaugeRange(
-              startValue: _minSafeValue,
-              endValue: _maxSafeValue,
-              color: Colors.green,
-            ),
-            GaugeRange(
-              startValue: _minWarningValue,
-              endValue: _maxWarningValue,
-              color: Colors.orange,
-            ),
-            GaugeRange(
-              startValue: _minDangerValue,
-              endValue: _maxDangerValue,
-              color: Colors.red,
-            ),
-          ], pointers: <GaugePointer>[
-            NeedlePointer(
-              value: _value,
-            ),
-          ], annotations: <GaugeAnnotation>[
-            GaugeAnnotation(
-                widget: Container(
-                    child: Text('$_value',
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold))),
-                angle: _value,
-                positionFactor: 0.5)
-          ]),
-        ],
       ),
     );
   }
@@ -184,16 +202,18 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
   void initState() {
     super.initState();
     _gaugeWidgetDisplay = GaugeWidgetBuilder(
-        _title,
-        _value,
-        _min,
-        _max,
-        _minSafeValue,
-        _maxSafeValue,
-        _minWarningValue,
-        _maxWarningValue,
-        _minDangerValue,
-        _maxDangerValue);
+      title: _title,
+      value: _value,
+      min: _min,
+      max: _max,
+      minSafeValue: _minSafeValue,
+      maxSafeValue: _maxSafeValue,
+      minWarningValue: _minWarningValue,
+      maxWarningValue: _maxWarningValue,
+      minDangerValue: _minDangerValue,
+      maxDangerValue: _maxDangerValue,
+    );
+
     _maxValueFocusNode = FocusNode();
     _minSafeValueFocusNode = FocusNode();
   }
@@ -223,16 +243,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                     () {
                       _title = text;
                       _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                          _title,
-                          _value,
-                          _min,
-                          _max,
-                          _minSafeValue,
-                          _maxSafeValue,
-                          _minWarningValue,
-                          _maxWarningValue,
-                          _minDangerValue,
-                          _maxDangerValue);
+                        title: _title,
+                        value: _value,
+                        min: _min,
+                        max: _max,
+                        minSafeValue: _minSafeValue,
+                        maxSafeValue: _maxSafeValue,
+                        minWarningValue: _minWarningValue,
+                        maxWarningValue: _maxWarningValue,
+                        minDangerValue: _minDangerValue,
+                        maxDangerValue: _maxDangerValue,
+                      );
                     },
                   );
                 },
@@ -263,16 +284,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                           setState(() {
                             _min = parsedValue;
                             _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                                _title,
-                                _value,
-                                _min,
-                                _max,
-                                _minSafeValue,
-                                _maxSafeValue,
-                                _minWarningValue,
-                                _maxWarningValue,
-                                _minDangerValue,
-                                _maxDangerValue);
+                              title: _title,
+                              value: _value,
+                              min: _min,
+                              max: _max,
+                              minSafeValue: _minSafeValue,
+                              maxSafeValue: _maxSafeValue,
+                              minWarningValue: _minWarningValue,
+                              maxWarningValue: _maxWarningValue,
+                              minDangerValue: _minDangerValue,
+                              maxDangerValue: _maxDangerValue,
+                            );
                           });
                         }
                       },
@@ -299,16 +321,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                             () {
                               _max = parsedValue;
                               _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                                  _title,
-                                  _value,
-                                  _min,
-                                  _max,
-                                  _minSafeValue,
-                                  _maxSafeValue,
-                                  _minWarningValue,
-                                  _maxWarningValue,
-                                  _minDangerValue,
-                                  _maxDangerValue);
+                                title: _title,
+                                value: _value,
+                                min: _min,
+                                max: _max,
+                                minSafeValue: _minSafeValue,
+                                maxSafeValue: _maxSafeValue,
+                                minWarningValue: _minWarningValue,
+                                maxWarningValue: _maxWarningValue,
+                                minDangerValue: _minDangerValue,
+                                maxDangerValue: _maxDangerValue,
+                              );
                             },
                           );
                         }
@@ -330,16 +353,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                     _minSafeValue = values.start;
                     _maxSafeValue = values.end;
                     _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                        _title,
-                        _value,
-                        _min,
-                        _max,
-                        _minSafeValue,
-                        _maxSafeValue,
-                        _minWarningValue,
-                        _maxWarningValue,
-                        _minDangerValue,
-                        _maxDangerValue);
+                      title: _title,
+                      value: _value,
+                      min: _min,
+                      max: _max,
+                      minSafeValue: _minSafeValue,
+                      maxSafeValue: _maxSafeValue,
+                      minWarningValue: _minWarningValue,
+                      maxWarningValue: _maxWarningValue,
+                      minDangerValue: _minDangerValue,
+                      maxDangerValue: _maxDangerValue,
+                    );
                   },
                 );
               },
@@ -356,16 +380,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                     _minWarningValue = values.start;
                     _maxWarningValue = values.end;
                     _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                        _title,
-                        _value,
-                        _min,
-                        _max,
-                        _minSafeValue,
-                        _maxSafeValue,
-                        _minWarningValue,
-                        _maxWarningValue,
-                        _minDangerValue,
-                        _maxDangerValue);
+                      title: _title,
+                      value: _value,
+                      min: _min,
+                      max: _max,
+                      minSafeValue: _minSafeValue,
+                      maxSafeValue: _maxSafeValue,
+                      minWarningValue: _minWarningValue,
+                      maxWarningValue: _maxWarningValue,
+                      minDangerValue: _minDangerValue,
+                      maxDangerValue: _maxDangerValue,
+                    );
                   },
                 );
               },
@@ -382,16 +407,17 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                     _minDangerValue = values.start;
                     _maxDangerValue = values.end;
                     _gaugeWidgetDisplay = GaugeWidgetBuilder(
-                        _title,
-                        _value,
-                        _min,
-                        _max,
-                        _minSafeValue,
-                        _maxSafeValue,
-                        _minWarningValue,
-                        _maxWarningValue,
-                        _minDangerValue,
-                        _maxDangerValue);
+                      title: _title,
+                      value: _value,
+                      min: _min,
+                      max: _max,
+                      minSafeValue: _minSafeValue,
+                      maxSafeValue: _maxSafeValue,
+                      minWarningValue: _minWarningValue,
+                      maxWarningValue: _maxWarningValue,
+                      minDangerValue: _minDangerValue,
+                      maxDangerValue: _maxDangerValue,
+                    );
                   },
                 );
               },
@@ -403,12 +429,22 @@ class _GaugeWidgetSettingUIState extends State<GaugeWidgetSettingUI> {
                   width: 8,
                 ),
                 TextButton(
-                  onPressed: () {},
                   child: const Text("Cancel"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
                 TextButton(
-                  onPressed: () {},
                   child: const Text("Add"),
+                  onPressed: () {
+                    ListWidgetClass widgetList = ListWidgetClass();
+                    widgetList.addItem(_gaugeWidgetDisplay);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => DemoPage()),
+                    );
+                  },
                 ),
                 const SizedBox(
                   width: 20,

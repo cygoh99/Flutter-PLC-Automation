@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "998650832466",
+    "firebase_url": "https://plc-automation-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "plc-automation-app",
+    "storage_bucket": "plc-automation-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998650832466:android:37fb265d7a9e875703a18b",
+        "android_client_info": {
+          "package_name": "com.example.plc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998650832466-uhceh4jpuiaf6sp99skqfm3n47s93v75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh-26Av1GziSqxbGbKNB68l5AQINsnQjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998650832466-uhceh4jpuiaf6sp99skqfm3n47s93v75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

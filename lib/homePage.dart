@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plc_app/demo.dart';
 
+import 'deviceList.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -14,7 +16,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Center(
-            child: Text("Hello World!"),
+            child: Text("Welcome!"),
           ),
           TextButton(
             onPressed: () {
@@ -23,7 +25,16 @@ class HomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const DemoPage()),
               );
             },
-            child: const Text('Next Page'),
+            child: const Text('Demo App'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DeviceListScreen()),
+              );
+            },
+            child: const Text('Device List'),
           ),
         ],
       ),
